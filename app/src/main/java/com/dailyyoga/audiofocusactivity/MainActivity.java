@@ -75,8 +75,9 @@ public class MainActivity extends AppCompatActivity implements YogaAudioManager.
 
     private void startPlay() {
         int result = YogaAudioManager.requestAudioFocus(this);
-        if (result == 0) {
-            Log.e("YogaAudioManager", "请求焦点失败");
+        Log.e("YogaAudioManager", "requestAudioFocusResult = " + result);
+        if (result != 1) {
+            return;
         }
         if (mMediaPlayer != null) {
             status = 2;
@@ -110,11 +111,15 @@ public class MainActivity extends AppCompatActivity implements YogaAudioManager.
 
     @Override
     public void audioStart() {
-        startPlay();
+        if (status == 1 || status == 3) {
+            startPlay();
+        }
     }
 
     @Override
     public void audioPause() {
-        pausePlay();
+        if (status == 2) {
+            pausePlay();
+        }
     }
 }

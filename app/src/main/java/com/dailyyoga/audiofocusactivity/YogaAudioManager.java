@@ -36,7 +36,7 @@ class YogaAudioManager {
                     switch (focusChange) {
                         case AudioManager.AUDIOFOCUS_GAIN:
                             // 重新获取
-                            // 网易云音乐暂停
+                            // 网易云音乐暂停,通话结束，微信聊天结束，录音播放完毕 // 8.0测试机可以收到 audio_focus_gain ，10.0不可以
                             Log.e("YogaAudioManager", "audio_focus_gain");
                             if (mListener != null) {
                                 mListener.audioStart();
@@ -44,7 +44,7 @@ class YogaAudioManager {
                             break;
                         case AudioManager.AUDIOFOCUS_LOSS:
                             // 长时间丢失
-                            // 网易云音乐播放 微信聊天 // 8.0测试机可以收到 audio_focus_gain ，10.0不可以
+                            // 网易云音乐播放 微信聊天
                             Log.e("YogaAudioManager", "audio_focus_loss");
                             if (mListener != null) {
                                 mListener.audioPause();
@@ -52,7 +52,7 @@ class YogaAudioManager {
                             break;
                         case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                             // 暂时丢失
-                            // 电话接听
+                            // 电话接听 录音播放
                             Log.e("YogaAudioManager", "audio_focus_loss_transient");
                             if (mListener != null) {
                                 mListener.audioPause();
@@ -62,10 +62,6 @@ class YogaAudioManager {
                             // 暂时获得焦点，不需要暂停其它已经申请的音频播放，但是需要降低音量
                             // 放大 or 放小音量处理
                             Log.e("YogaAudioManager", "audio_focus_loss_transient_can_duck");
-                            break;
-                        case AudioManager.AUDIOFOCUS_REQUEST_FAILED:
-                            // 失败
-                            Log.e("YogaAudioManager", "audio_focus_request_failed");
                             break;
                     }
                 }
@@ -77,10 +73,6 @@ class YogaAudioManager {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // 8.0及其以上
             if (mAudioFocusRequest == null) {
-                // AudioManager.AUDIOFOCUS_GAIN 未知持续时间的音频焦点请求
-                // AudioManager.AUDIOFOCUS_GAIN_TRANSIENT 暂时获得焦点，预计持续时间很短。
-                // AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK 暂时获得焦点，不需要暂停其它已经申请的音频播放，但是需要降低音量
-                //
                 mAudioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
                         .setAudioAttributes(new AudioAttributes.Builder()
                                 .setUsage(AudioAttributes.USAGE_MEDIA)

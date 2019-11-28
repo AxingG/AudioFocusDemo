@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements YogaAudioManager.
     protected void onDestroy() {
         super.onDestroy();
         releasePlay();
-        YogaAudioManager.releaseFocus();
+        int release = YogaAudioManager.releaseFocus();
     }
 
     @Override

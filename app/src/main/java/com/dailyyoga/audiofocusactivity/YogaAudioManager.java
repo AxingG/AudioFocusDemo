@@ -91,7 +91,7 @@ class YogaAudioManager {
             // AUDIOFOCUS_REQUEST_FAILED == 0
             // AUDIOFOCUS_REQUEST_GRANTED == 1
             return mAudioManager.requestAudioFocus(mAudioFocusChangeListener,
-                    AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+                    AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK, AudioManager.AUDIOFOCUS_GAIN);
         }
     }
 
